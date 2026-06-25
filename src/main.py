@@ -31,13 +31,13 @@ def run_dpo_alignment():
         # Adjust 'prompt' to match the column name in your dataset
         return len(tokenizer.tokenize(example["prompt"])) < max_prompt_length
 
-    # train_dataset, eval_dataset = get_dpo_safety_dataset()
+    train_dataset, eval_dataset = get_dpo_safety_dataset()
 
-    # use synthetic data for test
-    dataset = load_dataset("json", data_files="synthetic_safety_dpo.jsonl", split="train")
+    # use synthetic data for second exercise later
+    # dataset = load_dataset("json", data_files="synthetic_safety_dpo.jsonl", split="train")
 
     # filter dataset
-    dataset = dataset.filter(filter_prompts)
+    # dataset = dataset.filter(filter_prompts)
     
     # 3. Configure Parameter-Efficient Fine-Tuning (LoRA)
     # This ensures we only update ~1-2% of the parameters, matching your ML systems mindset
@@ -74,7 +74,7 @@ def run_dpo_alignment():
         train_dataset=dataset,
         processing_class=tokenizer,
         peft_config=peft_config,
-        #eval_dataset=eval_dataset
+        eval_dataset=eval_dataset
     )
 
     print("Starting DPO Optimization Loop...")
