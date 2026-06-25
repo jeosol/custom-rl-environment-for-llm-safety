@@ -2,3 +2,4 @@ transformers
 trl
 peft
 accelerate
+torchao>=0.16.0
