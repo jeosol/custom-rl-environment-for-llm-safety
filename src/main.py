@@ -5,6 +5,12 @@ from datasets import load_dataset
 from peft import LoraConfig
 from data_utils import get_dpo_safety_dataset
 
+max_prompt_length = 256
+
+def filter_prompts(example):
+    # Adjust 'prompt' to match the column name in your dataset
+    return len(tokenizer.tokenize(example["prompt"])) < max_prompt_length
+
 def run_dpo_alignment():
     model_id = "meta-llama/Llama-3.2-1B" # Highly optimized for Colab T4/A100 GPUs
     
@@ -30,6 +36,9 @@ def run_dpo_alignment():
 
     # use synthetic data for test
     dataset = load_dataset("json", data_files="synthetic_safety_dpo.jsonl", split="train")
+
+    # filter dataset
+    dataset = dataset.filter(filter_prompts)
     
     # 3. Configure Parameter-Efficient Fine-Tuning (LoRA)
     # This ensures we only update ~1-2% of the parameters, matching your ML systems mindset
@@ -53,7 +62,7 @@ def run_dpo_alignment():
         learning_rate=5e-5,
         logging_steps=10,
         max_length=512,
-        max_prompt_length=256,
+        # max_prompt_length=256, # this is now deprecated
         remove_unused_columns=False,
     )
 
