@@ -21,5 +21,8 @@ build-docker-image:
 	docker image build \
 	-t ${NAME}:${COMMIT_ID} . 
 
+generate-synthetic-data:
+	python src/generate_synthetic_data.py
+
 run:
 	python src/main.py
