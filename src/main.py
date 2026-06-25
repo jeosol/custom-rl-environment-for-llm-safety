@@ -72,7 +72,7 @@ def run_dpo_alignment():
         args=training_args,
         #beta=training_args.beta,
         train_dataset=dataset,
-        tokenizer=tokenizer,
+        processing_class=tokenizer,
         peft_config=peft_config,
         #eval_dataset=eval_dataset
     )
