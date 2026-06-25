@@ -24,8 +24,13 @@ def run_dpo_alignment():
     # In DPO, each sample needs: a prompt, a chosen (safe) answer, and a rejected (unsafe) answer.
     # We will load a public preference dataset or use your custom structured environment data.
     # dataset = load_dataset("Anthropic/hh-rlhf", split="train[:1000]") # Example Anthropic dataset
-    train_dataset, eval_dataset = get_dpo_safety_dataset()
 
+    #
+    # train_dataset, eval_dataset = get_dpo_safety_dataset()
+
+    # use synthetic data for test
+    dataset = load_dataset("json", data_files="synthetic_safety_dpo.jsonl", split="train")
+    
     # 3. Configure Parameter-Efficient Fine-Tuning (LoRA)
     # This ensures we only update ~1-2% of the parameters, matching your ML systems mindset
     peft_config = LoraConfig(
@@ -61,7 +66,7 @@ def run_dpo_alignment():
         train_dataset=dataset,
         tokenizer=tokenizer,
         peft_config=peft_config,
-        eval_dataset=eval_dataset
+        #eval_dataset=eval_dataset
     )
 
     print("Starting DPO Optimization Loop...")
