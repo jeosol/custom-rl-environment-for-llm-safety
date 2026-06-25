@@ -34,10 +34,10 @@ def run_dpo_alignment():
     train_dataset, eval_dataset = get_dpo_safety_dataset()
 
     # use synthetic data for second exercise later
-    # dataset = load_dataset("json", data_files="synthetic_safety_dpo.jsonl", split="train")
+    # train_dataset = load_dataset("json", data_files="synthetic_safety_dpo.jsonl", split="train")
 
     # filter dataset
-    # dataset = dataset.filter(filter_prompts)
+    # train_dataset = train_dataset.filter(filter_prompts)
     
     # 3. Configure Parameter-Efficient Fine-Tuning (LoRA)
     # This ensures we only update ~1-2% of the parameters, matching your ML systems mindset
@@ -71,7 +71,7 @@ def run_dpo_alignment():
         ref_model=None, # Passing None makes TRL automatically optimize memory via peft reference hooks
         args=training_args,
         #beta=training_args.beta,
-        train_dataset=dataset,
+        train_dataset=train_dataset,
         processing_class=tokenizer,
         peft_config=peft_config,
         eval_dataset=eval_dataset
