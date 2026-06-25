@@ -70,7 +70,7 @@ def run_dpo_alignment():
         model=model,
         ref_model=None, # Passing None makes TRL automatically optimize memory via peft reference hooks
         args=training_args,
-        beta=training_args.beta,
+        #beta=training_args.beta,
         train_dataset=dataset,
         tokenizer=tokenizer,
         peft_config=peft_config,
