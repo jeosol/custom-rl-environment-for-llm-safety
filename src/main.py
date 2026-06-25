@@ -7,10 +7,6 @@ from data_utils import get_dpo_safety_dataset
 
 max_prompt_length = 256
 
-def filter_prompts(example):
-    # Adjust 'prompt' to match the column name in your dataset
-    return len(tokenizer.tokenize(example["prompt"])) < max_prompt_length
-
 def run_dpo_alignment():
     model_id = "meta-llama/Llama-3.2-1B" # Highly optimized for Colab T4/A100 GPUs
     
@@ -31,7 +27,10 @@ def run_dpo_alignment():
     # We will load a public preference dataset or use your custom structured environment data.
     # dataset = load_dataset("Anthropic/hh-rlhf", split="train[:1000]") # Example Anthropic dataset
 
-    #
+    def filter_prompts(example):
+        # Adjust 'prompt' to match the column name in your dataset
+        return len(tokenizer.tokenize(example["prompt"])) < max_prompt_length
+
     # train_dataset, eval_dataset = get_dpo_safety_dataset()
 
     # use synthetic data for test
