@@ -24,5 +24,8 @@ build-docker-image:
 generate-synthetic-data:
 	python src/generate_synthetic_data.py
 
+generate-dpo-safety-data:
+	python src/data_utils.py
+
 run:
 	python src/main.py
